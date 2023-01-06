@@ -1,14 +1,18 @@
-export const TodoItem = ({id,text,isChecked,deleteTask,toggleComplited}) => {
-    
+import { useDispatch } from 'react-redux';
+import { fetchDeleteTodo, fetchToggleStatus } from '../Store/todoSlice';
+
+export const TodoItem = ({ id, title, completed }) => {
+    const dispatch = useDispatch();
+
     return (
-        <li>
+        <li key={id}>
             <input
                 type={'checkbox'}
-                checked = {isChecked}
-                onChange = {() => toggleComplited(id)}
+                checked={completed}
+                onChange={() => dispatch(fetchToggleStatus(id))}
             />
-            <span>{text}</span>
-            <span onClick={() => deleteTask(id)}></span>
+            <span>{title}</span>
+            <span onClick={() => dispatch(fetchDeleteTodo(id))}>&times;</span>
         </li>
     )
 }
